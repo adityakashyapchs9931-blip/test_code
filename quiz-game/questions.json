@@ -1,0 +1,42 @@
+[
+  {
+    "question": "What does 'HTML' stand for?",
+    "options": ["Hyper Trainer Marking Language", "Hyper Text Markup Language", "Hyper Text Marketing Language", "Hyphenated Text Markup Language"],
+    "answer": "Hyper Text Markup Language"
+  },
+  {
+    "question": "Which data type is immutable in Python?",
+    "options": ["List", "Dictionary", "Tuple", "Set"],
+    "answer": "Tuple"
+  },
+  {
+    "question": "Who developed the theory of relativity?",
+    "options": ["Isaac Newton", "Niels Bohr", "Albert Einstein", "Galileo Galilei"],
+    "answer": "Albert Einstein"
+  },
+  {
+    "question": "What is the time complexity of binary search?",
+    "options": ["O(n)", "O(n^2)", "O(log n)", "O(1)"],
+    "answer": "O(log n)"
+  },
+  {
+    "question": "Which planet is known as the Red Planet?",
+    "options": ["Venus", "Mars", "Jupiter", "Saturn"],
+    "answer": "Mars"
+  },
+  {
+    "question": "In Python, which keyword is used to define a function?",
+    "options": ["func", "def", "function", "define"],
+    "answer": "def"
+  },
+  {
+    "question": "Which country hosts the 2026 FIFA World Cup (jointly)?",
+    "options": ["Qatar", "USA, Canada, Mexico", "Brazil", "Germany"],
+    "answer": "USA, Canada, Mexico"
+  },
+  {
+    "question": "What does 'CPU' stand for?",
+    "options": ["Central Process Unit", "Central Processing Unit", "Computer Personal Unit", "Central Processor Utility"],
+    "answer": "Central Processing Unit"
+  }
+]
