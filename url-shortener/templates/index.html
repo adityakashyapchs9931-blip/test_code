@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snip — URL Shortener</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F4EF;
+    --ink: #1B1F23;
+    --ink-soft: #5B6470;
+    --indigo: #3454D1;
+    --teal: #16A085;
+    --card: #FFFFFF;
+    --line: #E3E0D8;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 64px 20px;
+  }
+
+  .wrap { width: 100%; max-width: 640px; }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 8px;
+  }
+
+  .sub {
+    color: var(--ink-soft);
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+
+  form {
+    display: flex;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    padding: 12px 14px;
+    background: transparent;
+    color: var(--ink);
+  }
+
+  button {
+    background: var(--indigo);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0 22px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  button:hover { background: #2a41ab; }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+
+  .error {
+    margin-top: 14px;
+    color: #B3261E;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+  }
+
+  .result {
+    margin-top: 20px;
+    padding: 18px 20px;
+    background: #EAF5F1;
+    border: 1px solid var(--teal);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .result a {
+    color: var(--teal);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .result a:hover { text-decoration: underline; }
+
+  .chain {
+    flex-shrink: 0;
+    color: var(--teal);
+  }
+
+  .history {
+    margin-top: 56px;
+  }
+
+  .history h2 {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+    margin-bottom: 4px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    gap: 16px;
+  }
+
+  .row .orig {
+    color: var(--ink-soft);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+  }
+
+  .row .code {
+    color: var(--indigo);
+    font-weight: 500;
+  }
+
+  .row .clicks {
+    color: var(--ink-soft);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .empty {
+    color: var(--ink-soft);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    padding: 20px 0;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">// snip</div>
+  <h1>Shorten it.</h1>
+  <p class="sub">Paste a long URL below and get a short link you can actually remember.</p>
+
+  <form method="POST" action="/">
+    <input type="text" name="url" placeholder="https://example.com/a/very/long/path?query=1" autofocus required>
+    <button type="submit">Snip</button>
+  </form>
+
+  {% if error %}
+    <div class="error">{{ error }}</div>
+  {% endif %}
+
+  {% if short_url %}
+    <div class="result">
+      <svg class="chain" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 15l6-6M8.5 8.5L11 6a3.5 3.5 0 015 5l-2.5 2.5M15.5 15.5L13 18a3.5 3.5 0 01-5-5l2.5-2.5" stroke-linecap="round"/>
+      </svg>
+      <a href="{{ short_url }}" target="_blank">{{ short_url }}</a>
+    </div>
+  {% endif %}
+
+  <div class="history">
+    <h2>Recent links</h2>
+    {% if links %}
+      {% for link in links %}
+        <div class="row">
+          <span class="orig">{{ link.original_url }}</span>
+          <span class="code">/{{ link.short_code }}</span>
+          <span class="clicks">{{ link.clicks }} click{{ 's' if link.clicks != 1 else '' }}</span>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty">No links yet — shorten your first one above.</div>
+    {% endif %}
+  </div>
+</div>
+</body>
+</html>
